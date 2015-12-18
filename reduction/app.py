@@ -1,10 +1,11 @@
 from kivy.app import App
+from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.screenmanager import ScreenManager
 
 from reduction import load_ui
 
 
-class GameWindow(ScreenManager):
+class GameWindow(FloatLayout):
     pass
 
 

@@ -1,0 +1,15 @@
+#:import Board reduction.component.board.Board
+
+<Board>:
+    canvas.before:
+        Color:
+            rgba: 0, 1, 0, 0.5
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+
+<GameWindow>
+    AnchorLayout:
+        Board:
+
