@@ -1,4 +1,13 @@
-#:import Board reduction.component.board.Board
+#:import Board reduction.component.board
+#:import Tile reduction.component.board
+
+<Tile>:
+    canvas.before:
+        Color:
+            rgba: 0, 0, 1, 0.5
+        Rectangle:
+            size: self.size
+            pos: self.pos
 
 <Board>:
     canvas.before:
@@ -6,10 +15,14 @@
             rgba: 0, 1, 0, 0.5
         Rectangle:
             size: self.size
-            pos: self.pos
 
 
 <GameWindow>
     AnchorLayout:
         Board:
-
+            Tile:
+                board_pos: 0, 1
+            Tile:
+                board_pos: 1, 2
+            Tile:
+                board_pos: 4, 3
