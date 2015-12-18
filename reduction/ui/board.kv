@@ -4,7 +4,7 @@
 <Tile>:
     canvas.before:
         Color:
-            rgba: 0, 0, 1, 0.5
+            rgba: self.bg_color
         Rectangle:
             size: self.size
             pos: self.pos
@@ -17,12 +17,6 @@
             size: self.size
 
 
-<GameWindow>
+<GameWindow>:
     AnchorLayout:
         Board:
-            Tile:
-                board_pos: 0, 1
-            Tile:
-                board_pos: 1, 2
-            Tile:
-                board_pos: 4, 3
