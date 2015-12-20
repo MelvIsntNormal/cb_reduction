@@ -1,0 +1,20 @@
+---
+id: 'tutorial'
+title: "Tutorial"
+
+levels:
+  - id: 'hello_world'
+    title: 'Hello, World!'
+    energy: 4
+    atoms:
+      - [0, 1, [5, 1], true]
+      - [0, 1, [1, 1], false]
+    world:
+      - [1, 1, 1]
+      - [1, 0, 1]
+      - [1, 0, 1]
+      - [1, 0, 1]
+      - [1, 0, 1]
+      - [1, 0, 1]
+      - [1, 1, 1]
+...

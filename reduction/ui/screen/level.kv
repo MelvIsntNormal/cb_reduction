@@ -1,0 +1,13 @@
+#:import LevelScreen reduction.screen.level
+#:import Board reduction.component.board
+
+<LevelScreen>:
+    canvas.before:
+        Color:
+            rgba: 0.3, 0.3, 0.3, 1
+        Rectangle:
+            size: self.size
+
+    AnchorLayout:
+        Board:
+            id: board

@@ -6,17 +6,19 @@ from kivy.uix.widget import Widget
 
 
 class Board(RelativeLayout):
-    cell_size = NumericProperty(70)
+    cell_size = NumericProperty(80)
     columns = NumericProperty(1)
     rows = NumericProperty(1)
     dimensions = ReferenceListProperty(columns, rows)
 
     grid = [
-        [1, 1, 1],
-        [1, 0, 1],
-        [1, 0, 1],
-        [1, 0, 1],
-        [1, 1, 1],
+        [1, 1, 1, 1, 1, 1],
+        [1, 1, 0, 0, 1, 1],
+        [1, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 1],
+        [1, 1, 0, 0, 1, 1],
+        [1, 1, 1, 1, 1, 1]
     ]
 
     def __init__(self, **kw):
@@ -33,11 +35,11 @@ class Board(RelativeLayout):
             for cell in column:
                 print j
                 board_pos = (i, j)
-                bg_color = [0, 0, 0, 0.5]
+                bg_color = []
                 if cell == 0:
-                    bg_color[2] = 1
+                    bg_color = [1, 1, 1, 1]
                 elif cell == 1:
-                    bg_color[0] = 1
+                    bg_color = [0, 0, 0, 1]
 
                 tile = Tile(board_pos=board_pos, bg_color=bg_color)
                 self.add_widget(tile)

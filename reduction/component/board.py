@@ -6,26 +6,21 @@ from kivy.uix.widget import Widget
 
 
 class Board(RelativeLayout):
-    cell_size = NumericProperty(70)
+    cell_size = NumericProperty(80)
     columns = NumericProperty(1)
     rows = NumericProperty(1)
     dimensions = ReferenceListProperty(columns, rows)
 
-    grid = [
-        [1, 1, 1],
-        [1, 0, 1],
-        [1, 0, 1],
-        [1, 0, 1],
-        [1, 1, 1],
-    ]
-
     def __init__(self, **kw):
         super(Board, self).__init__(**kw)
         self.size_hint = (None, None)
-        self.columns = len(self.grid)
+
+    def load(self, level):
+        grid = level.world
+        self.columns = len(grid)
 
         i = 0
-        for column in self.grid:
+        for column in grid:
             if self.rows < len(column):
                 self.rows = len(column)
 
@@ -33,11 +28,11 @@ class Board(RelativeLayout):
             for cell in column:
                 print j
                 board_pos = (i, j)
-                bg_color = [0, 0, 0, 0.5]
+                bg_color = []
                 if cell == 0:
-                    bg_color[2] = 1
+                    bg_color = [1, 1, 1, 1]
                 elif cell == 1:
-                    bg_color[0] = 1
+                    bg_color = [0, 0, 0, 1]
 
                 tile = Tile(board_pos=board_pos, bg_color=bg_color)
                 self.add_widget(tile)
@@ -46,6 +41,9 @@ class Board(RelativeLayout):
             i += 1
 
         self.size = (self.cell_size * self.columns, self.cell_size * self.rows)
+        # compile atoms
+
+        pass
 
     def do_layout(self, *largs, **kwargs):
         for child in self.children:
