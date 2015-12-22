@@ -3,7 +3,7 @@ id: 'tutorial'
 title: "Tutorial"
 
 levels:
-  - id: 'hello_world'
+  hello_world:
     title: 'Hello, World!'
     energy: 4
     atoms:
@@ -17,8 +17,8 @@ levels:
       - [1, 0, 1]
       - [1, 0, 1]
       - [1, 1, 1]
-  - id: 'hello_world'
-    title: 'Hello, World!'
+  test_world:
+    title: 'Test World'
     energy: 4
     atoms:
       - [0, 1, [4, 3], true]

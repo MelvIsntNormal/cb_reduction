@@ -7,13 +7,14 @@ class Chapter:
     def from_yaml(cls,  data):
         id = data['id']
         title = data['title']
-        levels = [Level.from_yaml(level) for level in data['levels']]
+        levels = {}
+        for key, level in data['levels'].iteritems():
+            levels[key] = Level.from_yaml(level)
         return cls(id, title, levels)
 
 
 class Level:
-    def __init__(self, id, title, energy, atoms, world):
-        self.id = id
+    def __init__(self, title, energy, atoms, world):
         self.title = title
         self.energy = energy
         self.atoms = atoms
