@@ -6,7 +6,8 @@ from kivy.uix.widget import Widget
 
 
 class Board(RelativeLayout):
-    cell_size = NumericProperty(80)
+
+    cell_size = NumericProperty(100)
     columns = NumericProperty(1)
     rows = NumericProperty(1)
     dimensions = ReferenceListProperty(columns, rows)
@@ -16,6 +17,9 @@ class Board(RelativeLayout):
         self.size_hint = (None, None)
 
     def load(self, level):
+        # TODO: find out why I have to do this
+        from reduction.component.atom import Atom
+
         grid = level.world
         self.columns = len(grid)
 
@@ -41,9 +45,10 @@ class Board(RelativeLayout):
             i += 1
 
         self.size = (self.cell_size * self.columns, self.cell_size * self.rows)
-        # compile atoms
 
-        pass
+        for atom in level.atoms:
+            a = Atom(*atom)
+            self.add_widget(a)
 
     def do_layout(self, *largs, **kwargs):
         for child in self.children:
