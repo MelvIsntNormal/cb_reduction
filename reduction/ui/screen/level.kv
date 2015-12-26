@@ -1,5 +1,6 @@
 #:import LevelScreen reduction.screen.level
 #:import Board reduction.component.board
+#import Player reduction.component.player
 
 <LevelScreen>:
     canvas.before:
@@ -9,5 +10,8 @@
             size: self.size
 
     AnchorLayout:
-        Board:
-            id: board
+        RelativeLayout:
+            Board:
+                id: board
+            Player:
+                id: player

@@ -1,0 +1,10 @@
+#:import Player reduction.component.player
+
+<Player>:
+    size_hint: None, None
+    canvas.before:
+        Color:
+            rgba: 1, 1, 0, 0.3
+        Rectangle:
+            size: self.size
+            pos: self.pos

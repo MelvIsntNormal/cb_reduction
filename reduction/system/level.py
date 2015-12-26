@@ -1,3 +1,8 @@
+"""
+Classes here are simply data structures
+"""
+
+
 class Chapter:
     def __init__(self, _id, _title, _levels):
         self.title = _title

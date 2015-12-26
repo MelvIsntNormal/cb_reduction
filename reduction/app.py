@@ -1,4 +1,6 @@
 from kivy.app import App
+from kivy.core.window import Window
+from kivy.modules import inspector
 from kivy.uix.screenmanager import ScreenManager
 
 from reduction import system
@@ -12,6 +14,7 @@ class GameWindow(ScreenManager):
 class ReductionApp(App):
     def build(self):
         game_window = GameWindow()
+        inspector.create_inspector(Window, game_window)
         screen = LevelScreen(name='level')
         game_window.add_widget(screen)
         screen.load_level(system.chapters[0].levels['test_world'])

@@ -26,7 +26,5 @@ def load_ui(directory):
 
 
 def initialise():
-    # load data files
-    # load ui files
     load_data('reduction/data/test', True)
     load_ui('reduction/ui')
