@@ -1,7 +1,32 @@
-class Level:
-    def __init__(self, _id, _title, _atoms, _energy, _world):
-        self.id = _id
+"""
+Classes here are simply data structures
+"""
+
+
+class Chapter:
+    def __init__(self, _id, _title, _levels):
         self.title = _title
-        self.atoms = _atoms
-        self.energy = _energy
-        self.world = _world
+        self.levels = _levels
+
+    @classmethod
+    def from_yaml(cls,  data):
+        id = data['id']
+        title = data['title']
+        levels = {}
+        for key, level in data['levels'].iteritems():
+            levels[key] = Level.from_yaml(level)
+        return cls(id, title, levels)
+
+
+class Level:
+    def __init__(self, title, energy, atoms, world):
+        self.title = title
+        self.energy = energy
+        self.atoms = atoms
+        self.world = world
+
+    @classmethod
+    def from_yaml(cls, data):
+        return cls(**data)
+
+

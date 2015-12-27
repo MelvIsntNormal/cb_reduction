@@ -66,6 +66,8 @@ class Board(RelativeLayout):
             a = Atom(*atom)
             self.add_widget(a)
 
+    def coords_to_board_pos(self, pos): return tuple((int(c/self.cell_size) for c in pos))
+
     def do_layout(self, *largs, **kwargs):
         for child in self.children:
             # All children must have this attribute
@@ -86,7 +88,7 @@ class Board(RelativeLayout):
         super(Board, self).do_layout(*largs, **kwargs)
 
 
-class BoardPiece(EventDispatcher):
+class BoardPiece(Widget):
     """
     Used to easily add required attributes to elements
     """
@@ -94,9 +96,25 @@ class BoardPiece(EventDispatcher):
     row = NumericProperty(0)
     board_pos = ReferenceListProperty(column, row)
 
+    def __init__(self, **kwargs):
+        super(BoardPiece, self).__init__(**kwargs)
 
-class Tile(Widget, BoardPiece):
+    def on_board_pos(self, *args):
+        print args
+        if isinstance(self.parent, Board):
+            col, row = self.board_pos
+            cell_size = self.parent.cell_size
+            self.pos = (
+                col * cell_size,
+                row * cell_size
+            )
+
+
+class Tile(BoardPiece):
     """
     Represents cells in grid
     """
     bg_color = ListProperty([1, 0, 0, 1])
+
+    def __init__(self, **kwargs):
+        super(Tile, self).__init__(**kwargs)

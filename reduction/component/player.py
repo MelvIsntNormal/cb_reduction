@@ -14,10 +14,9 @@ class Player(Widget):
     selected = ObjectProperty(Widget(size=(0, 0)))
 
     def load(self, level):
-        self.selected = Widget(size=(0, 0))
+        self.select(Widget(size=(0, 0)))
 
     def select(self, piece):
-        print piece
         self.selected = piece
         self.size = piece.size
         self.pos = piece.pos
