@@ -1,7 +1,7 @@
 from kivy.event import EventDispatcher
 from kivy.uix.relativelayout import RelativeLayout
 
-from kivy.properties import NumericProperty, ReferenceListProperty, ListProperty, ObjectProperty
+from kivy.properties import NumericProperty, ReferenceListProperty, ListProperty, ObjectProperty, BooleanProperty
 from kivy.uix.widget import Widget
 
 
@@ -47,13 +47,9 @@ class Board(RelativeLayout):
             j = 0
             for cell in column:
                 board_pos = (i, j)
-                bg_color = []  # simply for initialisation
-                if cell == 0:
-                    bg_color = [1, 1, 1, 1]
-                elif cell == 1:
-                    bg_color = [0, 0, 0, 1]
+                passable = True if cell == 0 else False
 
-                tile = Tile(board_pos=board_pos, bg_color=bg_color)
+                tile = Tile(board_pos=board_pos, passable=passable)
                 self.add_widget(tile)
                 j += 1
 
@@ -87,6 +83,22 @@ class Board(RelativeLayout):
 
         super(Board, self).do_layout(*largs, **kwargs)
 
+    def pieces_at(self, board_pos):
+        for child in self.children:
+            if hasattr(child, 'board_pos') and tuple(child.board_pos) == board_pos:
+                yield child
+
+    def can_pass(self, board_pos):
+        # check that position is within grid boundaries
+        if 0 <= board_pos[0] <= self.columns or 0 <= board_pos[1] <= self.rows:
+            # For each piece that occupies that position
+            for piece in self.pieces_at(board_pos):
+                # If it can be inhabited, return True
+                if isinstance(piece, Tile) and piece.passable:
+                    return True
+        # position can't be inhabited or is our of bounds
+        return False
+
 
 class BoardPiece(Widget):
     """
@@ -99,10 +111,9 @@ class BoardPiece(Widget):
     def __init__(self, **kwargs):
         super(BoardPiece, self).__init__(**kwargs)
 
-    def on_board_pos(self, *args):
-        print args
+    def on_board_pos(self, atom, board_pos):
         if isinstance(self.parent, Board):
-            col, row = self.board_pos
+            col, row = board_pos
             cell_size = self.parent.cell_size
             self.pos = (
                 col * cell_size,
@@ -115,6 +126,11 @@ class Tile(BoardPiece):
     Represents cells in grid
     """
     bg_color = ListProperty([1, 0, 0, 1])
+    passable = BooleanProperty(True)
 
     def __init__(self, **kwargs):
+        self.on_passable()
         super(Tile, self).__init__(**kwargs)
+
+    def on_passable(self, *largs, **kwargs):
+        self.bg_color = ([1, 1, 1] if self.passable else [0, 0, 0]) + [1]

@@ -20,3 +20,4 @@ class Player(Widget):
         self.selected = piece
         self.size = piece.size
         self.pos = piece.pos
+

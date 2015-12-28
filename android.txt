@@ -1,0 +1,3 @@
+title=Reduction
+author=Melvin Sowah
+orientation=landscape

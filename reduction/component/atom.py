@@ -37,15 +37,13 @@ class Atom(BoardPiece):
     def on_touch_down(self, touch):
         if self.collide_point(*touch.pos):
             self.parent.player.select(self)
-            print touch.pos
-            print self.parent.coords_to_board_pos(touch.pos)
             touch.grab(self)
             return True
 
     def on_touch_up(self, touch):
         if touch.grab_current is self:
-            print touch.pos
-            print self.parent.coords_to_board_pos(touch.pos)
-            self.board_pos = self.parent.coords_to_board_pos(touch.pos)
+            board_pos = self.parent.coords_to_board_pos(touch.pos)
+            if self.parent.can_pass(board_pos):
+                self.board_pos = board_pos
             touch.ungrab(self)
             return True

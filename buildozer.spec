@@ -4,10 +4,10 @@
 title = Reduction
 
 # (str) Package name
-package.name = chronicles_beyond_reduction
+package.name = reduction
 
 # (str) Package domain (needed for android/ios packaging)
-package.domain = uk.co.maxtrace.games.chroniclesbeyond.reduction
+package.domain = uk.co.maxtrace.games.chroniclesbeyond
 
 # (str) Source code where the main.py live
 source.dir = .
@@ -33,7 +33,7 @@ version = 1.0
 
 # (list) Application requirements
 # comma seperated e.g. requirements = sqlite3,kivy
-requirements = kivy
+requirements = kivy,pyyaml
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
