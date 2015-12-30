@@ -1,4 +1,4 @@
-from kivy.properties import ListProperty, BooleanProperty
+from kivy.properties import ListProperty, BooleanProperty, ObjectProperty
 
 from reduction.component.board_layout import BoardPiece
 
@@ -18,5 +18,6 @@ class Tile(BoardPiece):
         self.bg_color = ([1, 1, 1] if self.passable else [0, 0, 0]) + [1]
 
 
-class TargetTile(BoardPiece):
-    pass
+class VoidTile(BoardPiece):
+    atom_def = ObjectProperty(None)
+

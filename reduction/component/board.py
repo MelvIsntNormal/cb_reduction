@@ -8,6 +8,13 @@ class Board(BoardLayout):
 
     The GridLayout element wasn't used since it had no way of positioning
     elements manually.
+
+
+    Notes:
+        - Constraints:
+          - Each cell can only be occupied by one Tile
+          - Each cell can only be occupied by one Atom, or two atoms that can immediately reduce
+        - A level is completed when all voids (targets) have been filled with the correct atom
     """
 
     def __init__(self, **kw):
@@ -86,3 +93,4 @@ class Board(BoardLayout):
         print 'Resolving position', board_pos
         atoms = filter(lambda a: isinstance(a, Atom), self.pieces_at(board_pos))
         target = filter(lambda a: a.target, atoms)
+

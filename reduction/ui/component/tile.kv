@@ -7,3 +7,17 @@
         Rectangle:
             size: self.size
             pos: self.pos
+
+<VoidTile>
+    canvas.before:
+        Color:
+            rgba: self.atom_def.essence
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    canvas:
+        Color:
+            rgba: 0, 0, 0, 1
+        Ellipse:
+            size: self.size
+            pos: self.pos

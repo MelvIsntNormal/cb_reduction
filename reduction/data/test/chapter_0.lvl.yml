@@ -7,8 +7,8 @@ levels:
     title: 'Hello, World!'
     energy: 4
     atoms:
-      - [0, 1, [5, 1], true]
-      - [0, 1, [1, 1], false]
+      - [1, 1, [5, 1], true]
+      - [5, 1, [1, 1], false]
     world:
       - [1, 1, 1]
       - [1, 0, 1]
@@ -21,11 +21,11 @@ levels:
     title: 'Test World'
     energy: 4
     atoms:
-      - [0, 1, [4, 3], true]
-      - [0, 1, [4, 1], false]
-      - [0, 1, [4, 5], false]
-      - [0, 1, [1, 3], false]
-      - [0, 1, [7, 3], false]
+      - [1, 1, [4, 3], true]
+      - [3, 1, [4, 1], false]
+      - [6, 1, [4, 5], false]
+      - [7, 1, [1, 3], false]
+      - [1, 1, [7, 3], false]
     world:
       - [1, 1, 1, 1, 1, 1, 1]
       - [1, 1, 0, 0, 0, 1, 1]
