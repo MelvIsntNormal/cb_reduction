@@ -1,7 +1,7 @@
 from kivy.properties import ObjectProperty
-from kivy.uix.widget import Widget
 
-from reduction.component.board import BoardPiece, Board, Tile
+from reduction.component.board_layout import BoardPiece
+from reduction.component.tile import Tile
 from reduction.component.board_layout import BoardLayout
 
 

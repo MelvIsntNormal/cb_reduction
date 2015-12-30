@@ -1,6 +1,5 @@
-from kivy.properties import NumericProperty, ReferenceListProperty, ListProperty, ObjectProperty, BooleanProperty
-
-from reduction.component.board_layout import BoardPiece, BoardLayout
+from reduction.component.board_layout import BoardLayout
+from reduction.component.tile import Tile
 
 
 class Board(BoardLayout):
@@ -80,21 +79,10 @@ class Board(BoardLayout):
 
     def resolve(self, board_pos):
         from reduction.component.atom import Atom
+
+        # Each cell on the Board can only be inhabited by one atom at any given time
+        # If there are two atoms in the same space, they must reduce to one
+
         print 'Resolving position', board_pos
         atoms = filter(lambda a: isinstance(a, Atom), self.pieces_at(board_pos))
         target = filter(lambda a: a.target, atoms)
-
-
-class Tile(BoardPiece):
-    """
-    Represents cells in grid
-    """
-    bg_color = ListProperty([1, 0, 0, 1])
-    passable = BooleanProperty(True)
-
-    def __init__(self, **kwargs):
-        self.on_passable()
-        super(Tile, self).__init__(**kwargs)
-
-    def on_passable(self, *largs, **kwargs):
-        self.bg_color = ([1, 1, 1] if self.passable else [0, 0, 0]) + [1]

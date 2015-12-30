@@ -3,7 +3,8 @@ from kivy.properties import ListProperty
 from kivy.properties import NumericProperty, BooleanProperty
 from kivy.uix.widget import Widget
 
-from reduction.component.board import BoardPiece, Board
+from reduction.component.board import Board
+from reduction.component.board_layout import BoardPiece
 
 
 class Atom(BoardPiece):

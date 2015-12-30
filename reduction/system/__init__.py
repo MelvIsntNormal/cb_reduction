@@ -22,6 +22,7 @@ def load_data(directory=None, test=False):
 
 def load_ui(directory):
     for ui_file in get_files(directory, ".kv"):
+        print ui_file
         Builder.load_file(ui_file)
 
 
