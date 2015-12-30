@@ -17,7 +17,7 @@ class ReductionApp(App):
         inspector.create_inspector(Window, game_window)
         screen = LevelScreen(name='level')
         game_window.add_widget(screen)
-        screen.load_level(system.chapters[0].levels['test_world'])
+        screen.load_level(system.chapters[0].levels['hello_world'])
         game_window.current_screen = 'level'
         return game_window
 

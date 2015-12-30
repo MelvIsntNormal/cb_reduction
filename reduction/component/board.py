@@ -1,11 +1,9 @@
-from kivy.event import EventDispatcher
-from kivy.uix.relativelayout import RelativeLayout
-
 from kivy.properties import NumericProperty, ReferenceListProperty, ListProperty, ObjectProperty, BooleanProperty
-from kivy.uix.widget import Widget
+
+from reduction.component.board_layout import BoardPiece, BoardLayout
 
 
-class Board(RelativeLayout):
+class Board(BoardLayout):
     """
     Represents and displays the elements in a level.
 
@@ -13,24 +11,12 @@ class Board(RelativeLayout):
     elements manually.
     """
 
-    # length of the side of one cell. All cells are square
-    cell_size = NumericProperty(85)
-
-    columns = NumericProperty(1)
-    rows = NumericProperty(1)
-    dimensions = ReferenceListProperty(columns, rows)
-
     def __init__(self, **kw):
         super(Board, self).__init__(**kw)
-        # Make sure that the board is not resized by it's parent
-        self.size_hint = (None, None)
-        self.player = None
 
     def load(self, level, player):
         # TODO: find out why I have to do this
         from reduction.component.atom import Atom
-
-        self.player = player
 
         # small alias for the world as I used grid in testing code
         # Should probably refactor
@@ -62,8 +48,6 @@ class Board(RelativeLayout):
             a = Atom(*atom)
             self.add_widget(a)
 
-    def coords_to_board_pos(self, pos): return tuple((int(c/self.cell_size) for c in pos))
-
     def do_layout(self, *largs, **kwargs):
         for child in self.children:
             # All children must have this attribute
@@ -83,11 +67,6 @@ class Board(RelativeLayout):
 
         super(Board, self).do_layout(*largs, **kwargs)
 
-    def pieces_at(self, board_pos):
-        for child in self.children:
-            if hasattr(child, 'board_pos') and tuple(child.board_pos) == board_pos:
-                yield child
-
     def can_pass(self, board_pos):
         # check that position is within grid boundaries
         if 0 <= board_pos[0] <= self.columns or 0 <= board_pos[1] <= self.rows:
@@ -99,26 +78,11 @@ class Board(RelativeLayout):
         # position can't be inhabited or is our of bounds
         return False
 
-
-class BoardPiece(Widget):
-    """
-    Used to easily add required attributes to elements
-    """
-    column = NumericProperty(1)
-    row = NumericProperty(0)
-    board_pos = ReferenceListProperty(column, row)
-
-    def __init__(self, **kwargs):
-        super(BoardPiece, self).__init__(**kwargs)
-
-    def on_board_pos(self, atom, board_pos):
-        if isinstance(self.parent, Board):
-            col, row = board_pos
-            cell_size = self.parent.cell_size
-            self.pos = (
-                col * cell_size,
-                row * cell_size
-            )
+    def resolve(self, board_pos):
+        from reduction.component.atom import Atom
+        print 'Resolving position', board_pos
+        atoms = filter(lambda a: isinstance(a, Atom), self.pieces_at(board_pos))
+        target = filter(lambda a: a.target, atoms)
 
 
 class Tile(BoardPiece):

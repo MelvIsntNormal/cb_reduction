@@ -2,7 +2,7 @@
 #:import Tile reduction.component.board
 
 <Tile>:
-    canvas.before:
+    canvas:
         Color:
             rgba: self.bg_color
         Rectangle:
@@ -10,7 +10,7 @@
             pos: self.pos
 
 <Board>:
-    canvas.before:
+    canvas:
         Color:
             rgba: 0, 1, 0, 0.5
         Rectangle:

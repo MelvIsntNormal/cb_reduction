@@ -3,7 +3,7 @@ from kivy.properties import ListProperty
 from kivy.properties import NumericProperty, BooleanProperty
 from kivy.uix.widget import Widget
 
-from reduction.component.board import BoardPiece
+from reduction.component.board import BoardPiece, Board
 
 
 class Atom(BoardPiece):
@@ -35,7 +35,7 @@ class Atom(BoardPiece):
         super(Atom, self).__init__(**kwargs)
 
     def on_touch_down(self, touch):
-        if self.collide_point(*touch.pos):
+        if self.collide_point(*touch.pos) and not self.target:
             self.parent.player.select(self)
             touch.grab(self)
             return True
@@ -47,3 +47,9 @@ class Atom(BoardPiece):
                 self.board_pos = board_pos
             touch.ungrab(self)
             return True
+
+    def on_board_pos(self, piece, board_pos):
+        super(Atom, self).on_board_pos(piece, board_pos)
+        if isinstance(self.parent, Board):
+            print "Current postition:", self.board_pos
+            self.parent.resolve(board_pos)

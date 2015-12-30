@@ -1,9 +1,14 @@
 #:import Atom reduction.component.atom
 
 <Atom>:
-    canvas.before:
+    canvas:
         Color:
             rgba: self.color
         Ellipse:
             size: self.size
             pos: self.pos
+    Label:
+        size_hint: None, None
+        size: root.size
+        pos: root.pos
+        text: str(root.ions)
