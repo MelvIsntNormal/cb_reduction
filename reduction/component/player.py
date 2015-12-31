@@ -6,7 +6,7 @@ from reduction.component.board_layout import BoardLayout
 
 
 class Selector(BoardPiece):
-    selected = ObjectProperty()
+    selected = ObjectProperty((Tile(size=(0, 0), board_pos=(-1, -1))))
 
     def select(self, piece):
         if isinstance(piece, BoardPiece):

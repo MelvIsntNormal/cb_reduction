@@ -85,6 +85,22 @@ class Board(BoardLayout):
         # position can't be inhabited or is our of bounds
         return False
 
+    def straight_path_clear_between(self, start, end):
+        print start, end
+        points = ()
+        if start[0] == end[0]:
+            step = 1 if start[1] < end[1] else -1
+            points = list((start[0], x) for x in range(start[1] + step, end[1] + step, step))
+        elif start[1] == end[1]:
+            step = 1 if start[0] < end[0] else -1
+            points = list((x, start[1]) for x in range(start[0] + step, end[0] + step, step))
+        else:
+            raise ValueError('Not a straight line')
+
+        if len(points) > 0:
+            return all((self.can_pass(x) for x in points))
+        return False
+
     def resolve(self, board_pos):
         from reduction.component.atom import Atom
 

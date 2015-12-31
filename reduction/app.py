@@ -12,6 +12,7 @@ class GameWindow(ScreenManager):
 
 
 class ReductionApp(App):
+
     def build(self):
         game_window = GameWindow()
         inspector.create_inspector(Window, game_window)

@@ -1,3 +1,6 @@
+from operator import sub
+
+from __builtin__ import abs
 from kivy.properties import ListProperty
 
 from kivy.properties import NumericProperty, BooleanProperty
@@ -40,15 +43,23 @@ class Atom(BoardPiece):
         return list(reversed(c)) + [1]
 
     def on_touch_down(self, touch):
-        if self.collide_point(*touch.pos) and not self.target:
+        from reduction.component.board import Board
+        if self.collide_point(*touch.pos) and not self.target and isinstance(self.parent, Board):
             self.parent.player.select(self)
             touch.grab(self)
             return True
 
     def on_touch_up(self, touch):
-        if touch.grab_current is self:
-            board_pos = self.parent.coords_to_board_pos(touch.pos)
-            if self.parent.can_pass(board_pos):
+        from reduction.component.board import Board
+        if touch.grab_current is self and isinstance(self.parent, Board):
+            board_pos = list(self.parent.coords_to_board_pos(touch.pos))
+            print "Ended at", board_pos
+            dp = tuple(map(sub, self.board_pos, board_pos))
+            if abs(dp[0]) > abs(dp[1]):
+                board_pos[1] = self.board_pos[1]
+            else:
+                board_pos[0] = self.board_pos[0]
+            if self.parent.straight_path_clear_between(self.board_pos, board_pos):
                 self.board_pos = board_pos
             touch.ungrab(self)
             return True
