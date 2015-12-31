@@ -1,5 +1,3 @@
-#:import Tile reduction.component.board
-
 <Tile>:
     canvas:
         Color:
@@ -11,13 +9,19 @@
 <VoidTile>
     canvas.before:
         Color:
-            rgba: self.atom_def.essence
+            rgba: self.essence
         Rectangle:
             size: self.size
             pos: self.pos
     canvas:
         Color:
-            rgba: 0, 0, 0, 1
+            rgba: 0.2, 0.2, 0.2, 1
         Ellipse:
             size: self.size
             pos: self.pos
+    Label:
+        size_hint: None, None
+        size: root.size
+        pos: root.pos
+        text: str(root.ions)
+        font_size: 40

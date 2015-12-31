@@ -1,5 +1,5 @@
 from reduction.component.board_layout import BoardLayout
-from reduction.component.tile import Tile
+from reduction.component.tile import Tile, VoidTile
 
 
 class Board(BoardLayout):
@@ -21,38 +21,39 @@ class Board(BoardLayout):
         super(Board, self).__init__(**kw)
 
     def load(self, level, player):
-        # TODO: find out why I have to do this
-        from reduction.component.atom import Atom
-
-        # small alias for the world as I used grid in testing code
-        # Should probably refactor
-        grid = level.world
-        self.columns = len(grid)
-
-        # iterate through grid while keeping cell reference
-        i = 0
-        for column in grid:
-            # attempt to adjust dimensions to greatest column length
+        self.columns = len(level.world['tiles'])
+        self.rows = 0
+        for column in level.world['tiles']:
             if self.rows < len(column):
                 self.rows = len(column)
 
+        self.size = (self.cell_size * self.columns, self.cell_size * self.rows)
+
+        for widget in self.build_children(**level.world):
+            self.add_widget(widget)
+
+    @staticmethod
+    def build_children(tiles, voids, atoms):
+        from reduction.component.atom import Atom
+
+        i = 0
+        for column in tiles:
             j = 0
             for cell in column:
                 board_pos = (i, j)
                 passable = True if cell == 0 else False
 
-                tile = Tile(board_pos=board_pos, passable=passable)
-                self.add_widget(tile)
+                yield Tile(board_pos=board_pos, passable=passable)
                 j += 1
 
             i += 1
 
-        self.size = (self.cell_size * self.columns, self.cell_size * self.rows)
+        for void in voids:
+            yield VoidTile(*void)
 
-        for atom in level.atoms:
+        for atom in atoms:
             # destruct an array as positional arguments for constructor
-            a = Atom(*atom)
-            self.add_widget(a)
+            yield Atom(*atom)
 
     def do_layout(self, *largs, **kwargs):
         for child in self.children:

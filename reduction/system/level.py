@@ -19,10 +19,9 @@ class Chapter:
 
 
 class Level:
-    def __init__(self, title, energy, atoms, world):
+    def __init__(self, title, energy, world):
         self.title = title
         self.energy = energy
-        self.atoms = atoms
         self.world = world
 
     @classmethod

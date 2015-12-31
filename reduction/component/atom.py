@@ -2,7 +2,6 @@ from kivy.properties import ListProperty
 
 from kivy.properties import NumericProperty, BooleanProperty
 
-from reduction.component.board import Board
 from reduction.component.board_layout import BoardPiece
 
 
@@ -21,11 +20,10 @@ class Atom(BoardPiece):
     # True if the atom is a target that needs to be met to complete the level
     target = BooleanProperty(False)
 
-    def __init__(self, essence, ions, board_pos, target, **kwargs):
+    def __init__(self, essence, ions, board_pos, **kwargs):
         self.essence = self.convert_essence(essence)
         self.ions = ions
         self.board_pos = board_pos
-        self.target = target
 
         super(Atom, self).__init__(**kwargs)
 
@@ -56,6 +54,8 @@ class Atom(BoardPiece):
             return True
 
     def on_board_pos(self, piece, board_pos):
+        from reduction.component.board import Board
+
         super(Atom, self).on_board_pos(piece, board_pos)
         if isinstance(self.parent, Board):
             print "Current postition:", self.board_pos
