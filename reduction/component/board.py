@@ -108,6 +108,17 @@ class Board(BoardLayout):
         # If there are two atoms in the same space, they must reduce to one
 
         print 'Resolving position', board_pos
-        atoms = filter(lambda a: isinstance(a, Atom), self.pieces_at(board_pos))
-        target = filter(lambda a: a.target, atoms)
+        atoms = list(filter(lambda a: isinstance(a, Atom), self.pieces_at(board_pos)))
+        voids = list(filter(lambda a: isinstance(a, VoidTile), self.pieces_at(board_pos)))
+
+        # Reduction logic isn't implemented yet. Atoms should be reduced before filling a void
+        if len(atoms) > 1:
+            raise NotImplementedError("Reduction logic isn't implemented yet.")
+        atom = atoms[0]
+
+        if len(voids) == 1:
+            void = voids[0]
+            if void.can_be_completed_by(atom):
+                print "Winner!"
+
 

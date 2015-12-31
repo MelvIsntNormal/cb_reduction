@@ -29,3 +29,9 @@ class VoidTile(BoardPiece):
         self.ions = ions
         self.board_pos = board_pos
 
+    def can_be_completed_by(self, atom):
+        if not isinstance(atom, Atom):
+            raise ValueError("Only Atoms can complete Voids")
+
+        return atom.essence == self.essence and atom.ions == self.ions
+

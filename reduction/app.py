@@ -15,7 +15,6 @@ class ReductionApp(App):
 
     def build(self):
         game_window = GameWindow()
-        inspector.create_inspector(Window, game_window)
         screen = LevelScreen(name='level')
         game_window.add_widget(screen)
         screen.load_level(system.chapters[0].levels['test_world'])
