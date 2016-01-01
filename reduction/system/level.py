@@ -19,7 +19,7 @@ class Chapter:
 
 
 class Level:
-    def __init__(self, title, energy, world):
+    def __init__(self, title, energy, world, **kwargs):
         self.title = title
         self.energy = energy
         self.world = world
