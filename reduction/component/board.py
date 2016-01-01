@@ -1,5 +1,6 @@
 from reduction.component.board_layout import BoardLayout
 from reduction.component.tile import Tile, VoidTile
+from reduction.system import reductor
 
 
 class Board(BoardLayout):
@@ -75,15 +76,19 @@ class Board(BoardLayout):
         super(Board, self).do_layout(*largs, **kwargs)
 
     def can_pass(self, board_pos):
+        from reduction.component.atom import Atom
         # check that position is within grid boundaries
-        if 0 <= board_pos[0] <= self.columns or 0 <= board_pos[1] <= self.rows:
-            # For each piece that occupies that position
-            for piece in self.pieces_at(board_pos):
-                # If it can be inhabited, return True
-                if isinstance(piece, Tile) and piece.passable:
-                    return True
-        # position can't be inhabited or is our of bounds
-        return False
+        if not (0 <= board_pos[0] <= self.columns and 0 <= board_pos[1] <= self.rows):
+            return False
+        # For each piece that occupies that position
+        for piece in self.pieces_at(board_pos):
+            # If it can't be inhabited, return False
+            if isinstance(piece, Tile) and not piece.passable:
+                return False
+            elif isinstance(piece, Atom) and not piece.is_active:
+                return False
+        # position can be inhabited
+        return True
 
     def straight_path_clear_between(self, start, end):
         print start, end
@@ -111,10 +116,15 @@ class Board(BoardLayout):
         atoms = list(filter(lambda a: isinstance(a, Atom), self.pieces_at(board_pos)))
         voids = list(filter(lambda a: isinstance(a, VoidTile), self.pieces_at(board_pos)))
 
-        # Reduction logic isn't implemented yet. Atoms should be reduced before filling a void
-        if len(atoms) > 1:
-            raise NotImplementedError("Reduction logic isn't implemented yet.")
+        while len(atoms) > 1:
+            if reductor.can_reduce(*atoms[0:2]):
+                for x in atoms[0:2]:
+                    self.remove_widget(x)
+                atoms = [reductor.reduce_atoms(*atoms[0:2])] + atoms[2:]
+
         atom = atoms[0]
+        if atom.parent is None:
+            self.add_widget(atom)
 
         if len(voids) == 1:
             void = voids[0]

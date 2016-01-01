@@ -32,8 +32,11 @@ class Atom(BoardPiece):
 
     @staticmethod
     def convert_essence(essence):
+        if isinstance(essence, list):
+            return essence
         c, i, e = [0, 0, 0], 0, essence
         while i < 3 and e > 0:
+            print e
             if e % 2 == 1:
                 e -= 1
                 c[i] = 1
@@ -42,25 +45,41 @@ class Atom(BoardPiece):
 
         return list(reversed(c)) + [1]
 
+    @property
+    def is_active(self):
+        return self.ions > 0
+
     def on_touch_down(self, touch):
         from reduction.component.board import Board
-        if self.collide_point(*touch.pos) and not self.target and isinstance(self.parent, Board):
+        if self.collide_point(*touch.pos) \
+                and not self.target \
+                and self.is_active \
+                and isinstance(self.parent, Board):
             self.parent.player.select(self)
             touch.grab(self)
             return True
 
     def on_touch_up(self, touch):
+        from reduction.system import reductor
         from reduction.component.board import Board
         if touch.grab_current is self and isinstance(self.parent, Board):
             board_pos = list(self.parent.coords_to_board_pos(touch.pos))
-            print "Ended at", board_pos
+
             dp = tuple(map(sub, self.board_pos, board_pos))
             if abs(dp[0]) > abs(dp[1]):
                 board_pos[1] = self.board_pos[1]
             else:
                 board_pos[0] = self.board_pos[0]
+
+            atoms = list(filter(lambda x: isinstance(x, Atom), self.parent.pieces_at(board_pos)))
+
             if self.parent.straight_path_clear_between(self.board_pos, board_pos):
-                self.board_pos = board_pos
+                if len(atoms) > 0:
+                    print "Can atoms reduce? ", reductor.can_reduce(self, atoms[0])
+                    if reductor.can_reduce(self, atoms[0]):
+                        self.board_pos = board_pos
+                else:
+                    self.board_pos = board_pos
             touch.ungrab(self)
             return True
 
