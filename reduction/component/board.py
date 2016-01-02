@@ -1,4 +1,4 @@
-from kivy.properties import ListProperty
+from kivy.properties import ListProperty, ObjectProperty
 
 from reduction.component.board_layout import BoardLayout
 from reduction.component.tile import Tile, VoidTile
@@ -132,7 +132,8 @@ class Board(BoardLayout):
         if atom.parent is None:
             self.add_widget(atom)
 
+        print self.level_screen
         if len(voids) == 1:
             void = voids[0]
             if void.can_be_completed_by(atom) and all((void.is_complete for void in self.voids)):
-                print "Winner!"
+                self.parent.parent.parent.process_win()

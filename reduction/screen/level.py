@@ -1,3 +1,4 @@
+from kivy.uix.modalview import ModalView
 from kivy.uix.screenmanager import Screen
 
 
@@ -12,3 +13,13 @@ class LevelScreen(Screen):
     def load_level(self, level):
         self.ids.player.load(level)
         self.ids.board.load(level, self.ids.player)
+
+    def process_win(self):
+        view = LevelCompleteModal()
+        self.add_widget(view)
+        view.open()
+
+
+class LevelCompleteModal(ModalView):
+    pass
+
