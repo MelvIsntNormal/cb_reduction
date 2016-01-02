@@ -35,3 +35,13 @@ class VoidTile(BoardPiece):
 
         return atom.essence == self.essence and atom.ions == self.ions
 
+    @property
+    def is_complete(self):
+        from reduction.component.board import Board
+        board = self.parent
+        if isinstance(board, Board):
+            atoms = filter(lambda x: isinstance(x, Atom), board.pieces_at(self.board_pos))
+            if len(atoms) > 0 and self.can_be_completed_by(atoms[0]):
+                return True
+        return False
+

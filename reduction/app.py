@@ -17,7 +17,7 @@ class ReductionApp(App):
         game_window = GameWindow()
         screen = LevelScreen(name='level')
         game_window.add_widget(screen)
-        screen.load_level(system.chapters[0].levels['reduction'])
+        screen.load_level(system.chapters[0].levels['affinity'])
         game_window.current_screen = 'level'
         return game_window
 

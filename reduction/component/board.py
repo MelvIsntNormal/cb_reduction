@@ -1,3 +1,5 @@
+from kivy.properties import ListProperty
+
 from reduction.component.board_layout import BoardLayout
 from reduction.component.tile import Tile, VoidTile
 from reduction.system import reductor
@@ -18,6 +20,8 @@ class Board(BoardLayout):
         - A level is completed when all voids (targets) have been filled with the correct atom
     """
 
+    voids = ListProperty([])
+
     def __init__(self, **kw):
         super(Board, self).__init__(**kw)
 
@@ -29,8 +33,10 @@ class Board(BoardLayout):
                 self.rows = len(column)
 
         self.size = (self.cell_size * self.columns, self.cell_size * self.rows)
-
+        self.voids = []
         for widget in self.build_children(**level.world):
+            if isinstance(widget, VoidTile):
+                self.voids.append(widget)
             self.add_widget(widget)
 
     @staticmethod
@@ -128,7 +134,5 @@ class Board(BoardLayout):
 
         if len(voids) == 1:
             void = voids[0]
-            if void.can_be_completed_by(atom):
+            if void.can_be_completed_by(atom) and all((void.is_complete for void in self.voids)):
                 print "Winner!"
-
-
