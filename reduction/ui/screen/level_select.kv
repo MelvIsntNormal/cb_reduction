@@ -1,0 +1,9 @@
+<LevelButton>:
+    size_hint: (None, None)
+    disabled: self.is_locked
+    text: self.level.title
+    on_press: self.start_level()
+
+<LevelSelectScreen>:
+    BoxLayout:
+        id: container

@@ -96,6 +96,7 @@ levels:
         - [1, 1, 1, 1, 1]
   test_world:
     title: 'Test World'
+    requirements: !!null
     energy: 4
     world:
       atoms:

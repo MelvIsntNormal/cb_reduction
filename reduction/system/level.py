@@ -1,6 +1,7 @@
 """
 Classes here are simply data structures
 """
+from reduction.system import save_data
 
 
 class Chapter:
@@ -19,10 +20,19 @@ class Chapter:
 
 
 class Level:
-    def __init__(self, title, energy, world, **kwargs):
+    def __init__(self, title, requirements, energy, world, **kwargs):
         self.title = title
+        self.requirements = requirements
         self.energy = energy
         self.world = world
+
+        print self.is_unlocked
+
+    @property
+    def is_unlocked(self):
+        return self.requirements is None or all([
+            self.requirements['succeeds'] is None or self.requirements['succeeds'] in save_data.completed_levels
+        ])
 
     @classmethod
     def from_yaml(cls, data):
