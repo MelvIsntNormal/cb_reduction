@@ -51,4 +51,4 @@ class LevelSelectScreen(Screen):
         from reduction.app import GameWindow
         m = self.manager
         if isinstance(m, GameWindow):
-            m.load_level(system.chapters[ch].levels[lv])
+            m.load_level(system.chapters[ch].levels[lv], lv)

@@ -21,8 +21,8 @@ class GameWindow(ScreenManager):
             self.add_widget(screen)
         self.current = screen.name
 
-    def load_level(self, level):
-        self._level.load_level(level)
+    def load_level(self, level, lv_id):
+        self._level.load_level(level, lv_id)
         self._load(self._level)
 
     def load_main_menu(self):

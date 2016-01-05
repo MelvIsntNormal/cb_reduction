@@ -2,9 +2,19 @@
 #: import Player reduction.component.player.Player
 
 <LevelCompleteModal>:
-    Label:
-        text: "Winner!"
-        font_size: 80
+    size_hint: None, None
+    size: 500, 300
+    GridLayout:
+        cols: 3
+        rows: 2
+        Label:
+            size: self.parent.size
+            text: "Level Complete!"
+            text_size: self.size
+            font_size: 80
+        Button:
+            text: 'Level Select'
+            on_press: root.load_level_select()
 
 <LevelScreen>:
     id: level_screen

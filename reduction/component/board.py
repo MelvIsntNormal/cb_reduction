@@ -26,6 +26,7 @@ class Board(BoardLayout):
         super(Board, self).__init__(**kw)
 
     def load(self, level, player):
+        self.clear_widgets()
         self.columns = len(level.world['tiles'])
         self.rows = 0
         for column in level.world['tiles']:

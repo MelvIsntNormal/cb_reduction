@@ -30,6 +30,7 @@ class Level:
 
     @property
     def is_unlocked(self):
+        print self.requirements
         return self.requirements is None or all([
             self.requirements['succeeds'] is None or self.requirements['succeeds'] in save_data.completed_levels
         ])

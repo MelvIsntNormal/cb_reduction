@@ -23,7 +23,7 @@ levels:
   along_axis:
     title: 'Along the Axis'
     requirements:
-      succeeds: first_steps
+      succeeds: first_step
     energy: 4
     world:
       atoms:
